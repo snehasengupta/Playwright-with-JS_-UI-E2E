@@ -7,11 +7,10 @@ class LoginPage extends BasePage {
      */
     constructor(page) {
         super(page);
-        this.emailInput = page.locator(locators.emailInput);
-        this.passwordInput = page.locator(locators.passwordInput);
-        this.loginButton = page.locator(locators.loginButton);
+        this.emailInput = page.getByRole('textbox', { name: locators.emailRoleName });
+        this.passwordInput = page.getByRole('textbox', { name: locators.passwordRoleName });
+        this.loginButton = page.getByRole('button', { name: locators.signInBtnRoleName });
     }
-
 
     /**
      * Perform login action
@@ -19,9 +18,19 @@ class LoginPage extends BasePage {
      * @param {string} password 
      */
     async login(email, password) {
+        await this.emailInput.click();
         await this.emailInput.fill(email);
+        await this.passwordInput.click();
         await this.passwordInput.fill(password);
         await this.loginButton.click();
+    }
+
+    get emailValidationError() {
+        return this.page.getByText(locators.msgValidEmailRequired);
+    }
+
+    get passwordMinLengthError() {
+        return this.page.getByText(locators.msgPasswordMinLength);
     }
 }
 

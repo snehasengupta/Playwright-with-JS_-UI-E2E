@@ -13,6 +13,16 @@ const test = base.test.extend({
         const loginPage = new LoginPage(page);
         await loginPage.navigate('/login');
         await use(loginPage);
+    },
+    loggedInPage: async ({ page, loginPage }, use) => {
+        const { getRegisteredUsers } = require('../utils/testDataHelper');
+        const users = getRegisteredUsers();
+        const firstUser = users[0];
+        if (!firstUser) {
+            throw new Error('No registered users found in fixtures/registered_users.json. Please run registration tests first!');
+        }
+        await loginPage.login(firstUser.email, firstUser.password);
+        await use(page);
     }
 });
 
