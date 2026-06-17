@@ -1,0 +1,25 @@
+{
+  "name": "playwright-with-js_-ui-e2e",
+  "version": "1.0.0",
+  "description": "This repo contains an end to end framwork for web application automaton using playwright with javascript",
+  "main": "index.js",
+  "scripts": {
+    "test_registartion_e2e": "npx playwright test tests/e2eFlows/Register_User.spec.js --headed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snehasengupta/Playwright-with-JS_-UI-E2E.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/snehasengupta/Playwright-with-JS_-UI-E2E/issues"
+  },
+  "homepage": "https://github.com/snehasengupta/Playwright-with-JS_-UI-E2E#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.9.3"
+  }
+}
