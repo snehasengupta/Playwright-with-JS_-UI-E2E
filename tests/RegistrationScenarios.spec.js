@@ -1,5 +1,5 @@
-const { test, expect } = require('../customFixtures');
-const { generateRandomEmail, generateRandomPassword, saveRegisteredUser, getLastRegisteredUser } = require('../../utils/testDataHelper');
+const { test, expect } = require('./customFixtures');
+const { generateRandomEmail, generateRandomPassword, saveRegisteredUser, getLastRegisteredUser } = require('../utils/testDataHelper');
 
 test.describe.serial('Registration Flow', () => {
     test('TC_001: Register a new user successfully', async ({ registerPage }) => {
@@ -8,7 +8,7 @@ test.describe.serial('Registration Flow', () => {
 
         await registerPage.register(email, password);
 
-        // Save credentials to testdata/registered_users.json for login tests
+        // Save credentials to fixtures/registered_users.csv for login tests
         saveRegisteredUser(email, password);
 
         await registerPage.logout();

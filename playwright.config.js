@@ -35,7 +35,8 @@ export default defineConfig({
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     viewport: { width: 1200, height: 700 },
-    video: 'on'
+    video: 'on',
+    launchOptions: { slowMo: 1000 }
   },
 
   /* Configure projects for major browsers */

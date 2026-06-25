@@ -6,7 +6,8 @@
   "scripts": {
     "test_registartion_e2e": "npx playwright test tests/e2eFlows/Register_User.spec.js --headed",
     "test_login_e2e": "npx playwright test tests/e2eFlows/Login.spec.js --headed",
-    "test_e2e_flow": "npx playwright test tests/e2eFlows/endToendflow.spec.js --headed"
+    "test_e2e_flow": "npx playwright test tests/e2eFlows/endToendflow.spec.js --headed",
+    "test_admin_flow": "npx playwright test tests/e2eFlows/Admine2e.spec.js --headed"
   },
   "repository": {
     "type": "git",
