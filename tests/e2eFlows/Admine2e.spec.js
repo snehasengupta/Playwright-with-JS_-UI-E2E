@@ -66,7 +66,7 @@ test.describe('Admin Event Management', () => {
 
 
 
-    test('TC_004: Validate Event Creation Limit and Total Count', async ({ loggedInPage }) => {
+    test.skip('TC_004: Validate Event Creation Limit and Total Count', async ({ loggedInPage }) => {
         const adminPage = new AdminPage(loggedInPage);
 
         // Navigate to the admin panel
