@@ -7,7 +7,8 @@
     "test_registartion_e2e": "npx playwright test tests/RegistrationScenarios.spec.js --headed",
     "test_login_e2e": "npx playwright test tests/LoginScenarios.spec.js --headed",
     "test_bookevent_e2e": "npx playwright test tests/e2eFlows/BookEvente2e.js --headed",
-    "test_admin_e2e": "npx playwright test tests/e2eFlows/Admine2e.spec.js --headed"
+    "test_admin_e2e": "npx playwright test tests/e2eFlows/Admine2e.spec.js --headed",
+    "test_booking_form_validation": "npx playwright test tests/booking_form_validation.spec.js --headed"
   },
   "repository": {
     "type": "git",

@@ -85,6 +85,34 @@ class AdminPage extends BasePage {
     get eventUpdatedMessage() {
         return this.page.getByText(locators.msgEventUpdated);
     }
+
+    get newEventContainer() {
+        return this.page.locator('div').filter({ hasText: locators.newEventContainerText }).first();
+    }
+
+    get totalEventsElement() {
+        return this.page.getByText(locators.totalEventsText);
+    }
+
+    get limitTextElement() {
+        return this.page.getByText(locators.limitText);
+    }
+
+    get limitErrorElement() {
+        return this.page.getByText(locators.limitErrorText);
+    }
+
+    async clickNewEventContainer() {
+        await this.newEventContainer.click();
+    }
+
+    async clickTotalEvents() {
+        await this.totalEventsElement.click();
+    }
+
+    async clickLimitText() {
+        await this.limitTextElement.click();
+    }
 }
 
 module.exports = AdminPage;

@@ -14,5 +14,9 @@ module.exports = {
     confirmDialogYesTestId: 'confirm-dialog-yes',
     msgEventDeleted: 'Event deleted',
     editEventBtnTestId: 'edit-event-btn',
-    msgEventUpdated: 'Event updated!'
+    msgEventUpdated: 'Event updated!',
+    newEventContainerText: '+ New EventYou can add up to',
+    totalEventsText: /\d+ total/,
+    limitText: /You can add up to \d+ events/,
+    limitErrorText: 'Maximum event limit reached'
 };

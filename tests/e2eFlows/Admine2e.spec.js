@@ -6,13 +6,6 @@ const path = require('path');
 
 // Clean delete_event_data.csv at startup to ensure a fresh test run
 const deleteCsvPath = path.join(__dirname, '..', '..', 'fixtures', 'delete_event_data.csv');
-if (fs.existsSync(deleteCsvPath)) {
-    try {
-        fs.unlinkSync(deleteCsvPath);
-    } catch (e) {
-        console.error('Failed to unlink delete_event_data.csv:', e);
-    }
-}
 
 const lastUser = getLastRegisteredUser();
 if (!lastUser) {
@@ -26,6 +19,16 @@ const updateDataList = getAllEventTestData(lastUser.email, 'TC_003:Update Event'
 test.describe('Admin Event Management', () => {
     eventDataList.forEach((eventData, index) => {
         test(`TC_001:Create New Event - Run ${index + 1}: ${eventData.title}`, async ({ loggedInPage }) => {
+            if (index === 0) {
+                if (fs.existsSync(deleteCsvPath)) {
+                    try {
+                        fs.unlinkSync(deleteCsvPath);
+                    } catch (e) {
+                        console.error('Failed to unlink delete_event_data.csv:', e);
+                    }
+                }
+            }
+
             const adminPage = new AdminPage(loggedInPage);
 
             // Navigate to the admin panel
@@ -52,15 +55,35 @@ test.describe('Admin Event Management', () => {
 
             // Ensure event is visible in table
             await expect(adminPage.getEventCell(updateData.title)).toBeVisible();
-            
+
             // Update event price using POM method
             await adminPage.updateEventPrice(updateData.title, updateData.price);
-            
+
             // Verify successful event update using POM property
             await expect(adminPage.eventUpdatedMessage).toBeVisible();
         });
     });
 
+
+
+    test('TC_004: Validate Event Creation Limit and Total Count', async ({ loggedInPage }) => {
+        const adminPage = new AdminPage(loggedInPage);
+
+        // Navigate to the admin panel
+        await adminPage.goToAdminSection();
+
+        // Perform actions
+        await adminPage.clickNewEventContainer();
+        await adminPage.clickTotalEvents();
+        await adminPage.clickLimitText();
+
+        // Expectations
+        await expect(adminPage.totalEventsElement).toBeVisible();
+        await expect(adminPage.limitTextElement).toBeVisible();
+
+        // Soft assertion: no error is showing, but it is supposed to show
+        await expect.soft(adminPage.limitErrorElement).toBeVisible();
+    });
     test('TC_002:Delete Event', async ({ loggedInPage }, testInfo) => {
         // Read the delete CSV dynamically at execution time to get fresh rows appended by TC_001
         const deleteDataList = getAllDeleteEventData(lastUser.email, testInfo.title);
