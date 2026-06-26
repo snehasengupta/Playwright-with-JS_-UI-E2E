@@ -14,6 +14,7 @@ import { chromium, defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './tests',
+  testMatch: ['**/*.spec.js', '**/BookEvente2e.js'],
   timeout: 50 * 1000,//global
   // expect: {
   //   timeout: 50 * 1000 //assertio level

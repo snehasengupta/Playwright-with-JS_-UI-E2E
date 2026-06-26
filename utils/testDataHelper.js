@@ -458,6 +458,62 @@ function getDeleteEventData(email, testName) {
     return list.length > 0 ? list[list.length - 1] : null;
 }
 
+/**
+ * Retrieve booking test data from fixtures/booking_test_data.csv matching email and test name
+ * @param {string} email 
+ * @param {string} testName 
+ * @returns {Object|null}
+ */
+function getBookingTestData(email, testName) {
+    const filePath = path.join(__dirname, '..', 'fixtures', 'booking_test_data.csv');
+    if (!fs.existsSync(filePath)) {
+        throw new Error(`Booking test data CSV file does not exist at ${filePath}`);
+    }
+    const content = fs.readFileSync(filePath, 'utf-8');
+    const rows = parseCsv(content);
+    if (rows.length === 0) {
+        return null;
+    }
+
+    const headers = rows[0].map(h => h.trim());
+    const runIdx = headers.indexOf('Run');
+    const emailIdx = headers.indexOf('Email');
+    const testNameIdx = headers.indexOf('Test Name');
+    const searchTermIdx = headers.indexOf('SearchTerm');
+    const categoryIdx = headers.indexOf('Category');
+    const categorySelectIdx = headers.indexOf('CategorySelect');
+    const citySelectIdx = headers.indexOf('CitySelect');
+    const eventNameIdx = headers.indexOf('EventName');
+    const fullNameIdx = headers.indexOf('FullName');
+    const customerEmailIdx = headers.indexOf('CustomerEmail');
+    const phoneNumberIdx = headers.indexOf('PhoneNumber');
+
+    for (let i = 1; i < rows.length; i++) {
+        const row = rows[i];
+        if (row.length < headers.length) {
+            continue;
+        }
+        
+        const runVal = row[runIdx] ? row[runIdx].trim().toLowerCase() : '';
+        const emailVal = row[emailIdx] ? row[emailIdx].trim().toLowerCase() : '';
+        const testNameVal = row[testNameIdx] ? row[testNameIdx].trim() : '';
+
+        if (runVal === 'yes' && emailVal === email.trim().toLowerCase() && testNameVal === testName.trim()) {
+            return {
+                searchTerm: row[searchTermIdx],
+                category: row[categoryIdx],
+                categorySelect: row[categorySelectIdx],
+                citySelect: row[citySelectIdx],
+                eventName: row[eventNameIdx],
+                fullName: row[fullNameIdx],
+                customerEmail: row[customerEmailIdx],
+                phoneNumber: row[phoneNumberIdx]
+            };
+        }
+    }
+    return null;
+}
+
 module.exports = {
     generateRandomEmail,
     generateRandomPassword,
@@ -469,4 +525,5 @@ module.exports = {
     saveDeleteEventData,
     getDeleteEventData,
     getAllDeleteEventData,
+    getBookingTestData,
 };

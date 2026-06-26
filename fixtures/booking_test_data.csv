@@ -1,0 +1,4 @@
+"Run","Test Name","Email","SearchTerm","Category","CategorySelect","CitySelect","EventName","FullName","CustomerEmail","PhoneNumber"
+"yes","TC_01: End to End journey from banner","user_r35g07yd_mqt1e7xt@test.com","","","","","","test test","test@test.com","8910883979"
+"yes","TC_02: E2E journey from search event ","user_r35g07yd_mqt1e7xt@test.com","kaba","","","","kabaddi","test tes","test@test.com","8710553979"
+"yes","TC_03: E2E journey from category filter and city filer","user_r35g07yd_mqt1e7xt@test.com","","Sports","Workshop","Mumbai","Pottery","Test Lst Test","testlst@test.com","90564451232"

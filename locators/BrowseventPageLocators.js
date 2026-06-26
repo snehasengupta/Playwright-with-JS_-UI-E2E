@@ -21,7 +21,12 @@ module.exports = {
     // Success & View Bookings
     bookingConfirmedHeading: 'Booking Confirmed! 🎉',
     viewMyBookingsBtnName: 'View My Bookings',
-    bookingCardSelector: '.bg-white.rounded-xl',
+    bookingCardTestId: 'booking-card',
     myBookingsNavTestId: 'nav-bookings',
-    bookingRefSelector: '.booking-ref'
+    bookingRefSelector: '.booking-ref',
+
+    // Search & Filter
+    searchBarPlaceholder: 'Search events, venues…',
+    eventCardTestId: 'event-card'
 };
+

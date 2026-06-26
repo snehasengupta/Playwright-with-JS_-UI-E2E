@@ -4,10 +4,10 @@
   "description": "This repo contains an end to end framwork for web application automaton using playwright with javascript",
   "main": "index.js",
   "scripts": {
-    "test_registartion_e2e": "npx playwright test tests/e2eFlows/Register_User.spec.js --headed",
-    "test_login_e2e": "npx playwright test tests/e2eFlows/Login.spec.js --headed",
-    "test_e2e_flow": "npx playwright test tests/e2eFlows/endToendflow.spec.js --headed",
-    "test_admin_flow": "npx playwright test tests/e2eFlows/Admine2e.spec.js --headed"
+    "test_registartion_e2e": "npx playwright test tests/RegistrationScenarios.spec.js --headed",
+    "test_login_e2e": "npx playwright test tests/LoginScenarios.spec.js --headed",
+    "test_bookevent_e2e": "npx playwright test tests/e2eFlows/BookEvente2e.js --headed",
+    "test_admin_e2e": "npx playwright test tests/e2eFlows/Admine2e.spec.js --headed"
   },
   "repository": {
     "type": "git",
