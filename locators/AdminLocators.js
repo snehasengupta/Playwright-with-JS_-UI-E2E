@@ -12,5 +12,7 @@ module.exports = {
     addEventBtnTestId: 'add-event-btn',
     msgEventCreated: '✓Event created!×',
     confirmDialogYesTestId: 'confirm-dialog-yes',
-    msgEventDeleted: 'Event deleted'
+    msgEventDeleted: 'Event deleted',
+    editEventBtnTestId: 'edit-event-btn',
+    msgEventUpdated: 'Event updated!'
 };

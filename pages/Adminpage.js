@@ -73,6 +73,18 @@ class AdminPage extends BasePage {
     get eventDeletedMessage() {
         return this.page.getByText(locators.msgEventDeleted);
     }
+
+    async updateEventPrice(title, newPrice) {
+        const row = this.page.getByRole('row', { name: title });
+        await row.getByTestId(locators.editEventBtnTestId).click();
+        await this.priceInput.click();
+        await this.priceInput.fill(String(newPrice));
+        await this.addEventButton.click();
+    }
+
+    get eventUpdatedMessage() {
+        return this.page.getByText(locators.msgEventUpdated);
+    }
 }
 
 module.exports = AdminPage;

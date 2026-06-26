@@ -21,6 +21,7 @@ if (!lastUser) {
 
 // Get all matching test data rows for this test name
 const eventDataList = getAllEventTestData(lastUser.email, 'TC_001:Create New Event');
+const updateDataList = getAllEventTestData(lastUser.email, 'TC_003:Update Event');
 
 test.describe('Admin Event Management', () => {
     eventDataList.forEach((eventData, index) => {
@@ -42,22 +43,22 @@ test.describe('Admin Event Management', () => {
         });
     });
 
-    test('TC_003:Update Event', async ({ loggedInPage }) => {
-        const adminPage = new AdminPage(loggedInPage);
+    updateDataList.forEach((updateData, index) => {
+        test(`TC_003:Update Event - Run ${index + 1}: ${updateData.title}`, async ({ loggedInPage }) => {
+            const adminPage = new AdminPage(loggedInPage);
 
-        // Navigate to the admin panel
-        await adminPage.goToAdminSection();
+            // Navigate to the admin panel
+            await adminPage.goToAdminSection();
 
-        // Ensure Arijit event is visible in table
-        await expect(loggedInPage.locator('tbody')).toContainText('Arijit Singh in Sing');
-        
-        // Target the edit button specifically for 'Arijit Singh in Sing' to avoid strict mode violations
-        await loggedInPage.getByRole('row', { name: 'Arijit Singh in Sing' }).getByTestId('edit-event-btn').click();
-        
-        await loggedInPage.getByRole('spinbutton', { name: 'Price ($)*' }).click();
-        await loggedInPage.getByRole('spinbutton', { name: 'Price ($)*' }).fill('2000');
-        await loggedInPage.getByTestId('add-event-btn').click();
-        await expect(loggedInPage.getByText('Event updated!')).toBeVisible();
+            // Ensure event is visible in table
+            await expect(adminPage.getEventCell(updateData.title)).toBeVisible();
+            
+            // Update event price using POM method
+            await adminPage.updateEventPrice(updateData.title, updateData.price);
+            
+            // Verify successful event update using POM property
+            await expect(adminPage.eventUpdatedMessage).toBeVisible();
+        });
     });
 
     test('TC_002:Delete Event', async ({ loggedInPage }, testInfo) => {

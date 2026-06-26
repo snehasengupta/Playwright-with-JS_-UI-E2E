@@ -2,7 +2,7 @@ const { test, expect } = require('../customFixtures');
 const BrowseEventPage = require('../../pages/BrowseventPage');
 
 test.describe('E2E Event Booking Flow', () => {
-    test('TC_01: End to End journey', async ({ loggedInPage }) => {
+    test('TC_01: End to End journey from banner', async ({ loggedInPage }) => {
         // Instantiate BrowseEventPage using the authenticated page returned by the fixture
         const browseEventPage = new BrowseEventPage(loggedInPage);
 
@@ -37,6 +37,13 @@ test.describe('E2E Event Booking Flow', () => {
 
 
 
+
+    });
+
+    test('TC_02: E2E journey from search event ', async ({ loggedInPage }) => {
+
+    });
+    test('TC_03: E2E journey from category filter and city filer', async ({ loggedInPage }) => {
 
     });
 });
