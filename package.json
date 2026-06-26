@@ -8,7 +8,8 @@
     "test_login_e2e": "npx playwright test tests/LoginScenarios.spec.js --headed",
     "test_bookevent_e2e": "npx playwright test tests/e2eFlows/BookEvente2e.js --headed",
     "test_admin_e2e": "npx playwright test tests/e2eFlows/Admine2e.spec.js --headed",
-    "test_booking_form_validation": "npx playwright test tests/booking_form_validation.spec.js --headed"
+    "test_booking_form_validation": "npx playwright test tests/booking_form_validation.spec.js --headed",
+    "test_all_endtoend": "npx playwright test --grep @endtoend"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
   "homepage": "https://github.com/snehasengupta/Playwright-with-JS_-UI-E2E#readme",
   "devDependencies": {
     "@playwright/test": "^1.60.0",
-    "@types/node": "^25.9.3"
+    "@types/node": "^25.9.3",
+    "allure-playwright": "^3.10.1"
   }
 }

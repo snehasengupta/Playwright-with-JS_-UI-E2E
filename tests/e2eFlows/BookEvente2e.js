@@ -8,7 +8,7 @@ if (!lastUser) {
 }
 
 test.describe('E2E Event Booking Flow', () => {
-    test('TC_01: End to End journey from banner', async ({ loggedInPage }) => {
+    test('TC_01: End to End journey from banner', { tag: '@endtoend' }, async ({ loggedInPage }) => {
         const testData = getBookingTestData(lastUser.email, 'TC_01: End to End journey from banner');
         if (!testData) {
             test.skip();
@@ -47,7 +47,7 @@ test.describe('E2E Event Booking Flow', () => {
         await expect(browseEventPage.bookingRefByValue(bookingRef)).toHaveCount(1);
     });
 
-    test('TC_02: E2E journey from search event ', async ({ loggedInPage }) => {
+    test('TC_02: E2E journey from search event ', { tag: '@endtoend' }, async ({ loggedInPage }) => {
         const testData = getBookingTestData(lastUser.email, 'TC_02: E2E journey from search event ');
         if (!testData) {
             test.skip();
@@ -94,7 +94,7 @@ test.describe('E2E Event Booking Flow', () => {
         await expect(loggedInPage.getByRole('main')).toContainText(testData.eventName);
     });
 
-    test('TC_03: E2E journey from category filter and city filer', async ({ loggedInPage }) => {
+    test('TC_03: E2E journey from category filter and city filer', { tag: '@endtoend' }, async ({ loggedInPage }) => {
         const testData = getBookingTestData(lastUser.email, 'TC_03: E2E journey from category filter and city filer');
         if (!testData) {
             test.skip();

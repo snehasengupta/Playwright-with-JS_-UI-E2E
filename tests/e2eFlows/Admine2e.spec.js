@@ -18,7 +18,7 @@ const updateDataList = getAllEventTestData(lastUser.email, 'TC_003:Update Event'
 
 test.describe('Admin Event Management', () => {
     eventDataList.forEach((eventData, index) => {
-        test(`TC_001:Create New Event - Run ${index + 1}: ${eventData.title}`, async ({ loggedInPage }) => {
+        test(`TC_001:Create New Event - Run ${index + 1}: ${eventData.title}`, { tag: '@endtoend' }, async ({ loggedInPage }) => {
             if (index === 0) {
                 if (fs.existsSync(deleteCsvPath)) {
                     try {

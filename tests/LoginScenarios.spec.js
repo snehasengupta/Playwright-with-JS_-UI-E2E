@@ -1,9 +1,9 @@
-const { test, expect } = require('./customFixtures');
+const { test, expect } = require('../utils/customFixtures');
 const { getLastRegisteredUser } = require('../utils/testDataHelper');
 const BrowseEventPage = require('../pages/BrowseventPage');
 
 test.describe('Login Flow', () => {
-    test('TC_006: Valid Login Scenario', async ({ loginPage, page }) => {
+    test('TC_006: Valid Login Scenario', { tag: '@endtoend' }, async ({ loginPage, page }) => {
         const lastUser = getLastRegisteredUser();
 
         // Fail clearly if no users exist in registered_users.csv

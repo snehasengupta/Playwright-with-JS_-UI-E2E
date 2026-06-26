@@ -1,8 +1,8 @@
-const { test, expect } = require('./customFixtures');
+const { test, expect } = require('../utils/customFixtures');
 const { generateRandomEmail, generateRandomPassword, saveRegisteredUser, getLastRegisteredUser } = require('../utils/testDataHelper');
 
 test.describe.serial('Registration Flow', () => {
-    test('TC_001: Register a new user successfully', async ({ registerPage }) => {
+    test('TC_001: Register a new user successfully', { tag: '@endtoend' }, async ({ registerPage }) => {
         const email = generateRandomEmail();
         const password = generateRandomPassword();
 
