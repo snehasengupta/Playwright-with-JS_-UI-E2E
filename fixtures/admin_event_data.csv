@@ -1,0 +1,4 @@
+"Email","Test Name","title","description","category","city","venue","price","dateTime","seats"
+"user_r35g07yd_mqt1e7xt@test.com","TC_001:Create New Event","Arijit Singh in Sing","Live Arijit singh concert","Concert","Hyderabad","Sarath City Capital Mall","200","2026-10-28T16:50","50"
+"user_r35g07yd_mqt1e7xt@test.com","TC_001:Create New Event","Playwright Discussion","Live Playwright discussion and presentation","Conference","bengaluru","Bangalore Palace","4999","2026-12-11T16:50","50"
+"user_r35g07yd_mqt1e7xt@test.com","TC_003:Update Event","Arijit Singh in Sing","","","","","2000","",""

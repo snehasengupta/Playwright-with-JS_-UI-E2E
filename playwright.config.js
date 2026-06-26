@@ -14,6 +14,7 @@ import { chromium, defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './tests',
+  testMatch: ['**/*.spec.js', '**/BookEvente2e.js'],
   timeout: 50 * 1000,//global
   // expect: {
   //   timeout: 50 * 1000 //assertio level
@@ -27,7 +28,10 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [
+    ['html'],
+    ['allure-playwright', { resultsDir: 'test-results/allure-results' }]
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     baseURL: 'https://eventhub.rahulshettyacademy.com',
@@ -35,7 +39,8 @@ export default defineConfig({
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     viewport: { width: 1200, height: 700 },
-    video: 'on'
+    video: 'on',
+    launchOptions: { slowMo: 1000 }
   },
 
   /* Configure projects for major browsers */
