@@ -4,12 +4,16 @@
   "description": "This repo contains an end to end framwork for web application automaton using playwright with javascript",
   "main": "index.js",
   "scripts": {
-    "test_registartion_e2e": "npx playwright test tests/RegistrationScenarios.spec.js --headed",
-    "test_login_e2e": "npx playwright test tests/LoginScenarios.spec.js --headed",
-    "test_bookevent_e2e": "npx playwright test tests/e2eFlows/BookEvente2e.js --headed",
-    "test_admin_e2e": "npx playwright test tests/e2eFlows/Admine2e.spec.js --headed",
-    "test_booking_form_validation": "npx playwright test tests/booking_form_validation.spec.js --headed",
-    "test_all_endtoend": "npx playwright test --grep @endtoend"
+    "test_registartion_e2e": "node scripts/run-tests.js tests/RegistrationScenarios.spec.js --headed",
+    "test_login_e2e": "node scripts/run-tests.js tests/LoginScenarios.spec.js --headed",
+    "test_bookevent_e2e": "node scripts/run-tests.js tests/e2eFlows/BookEvente2e.js --headed",
+    "test_admin_e2e": "node scripts/run-tests.js tests/e2eFlows/Admine2e.spec.js --headed",
+    "test_booking_form_validation": "node scripts/run-tests.js tests/booking_form_validation.spec.js --headed",
+    "test_all_endtoend": "node scripts/run-tests.js --grep @endtoend",
+    "test": "node scripts/run-tests.js",
+    "allure:generate": "npx allure generate test-results/allure-results -o test-results/allure-report",
+    "allure:open": "npx allure open test-results/allure-report",
+    "allure:serve": "npx allure serve test-results/allure-results"
   },
   "repository": {
     "type": "git",
