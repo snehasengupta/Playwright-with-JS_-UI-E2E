@@ -37,7 +37,8 @@ const req = https.request(options, (res) => {
     try {
       const response = JSON.parse(body);
       const analysis = response.content[0].text;
-      console.log(analysis);
+      fs.writeFileSync('ai-analysis.txt', analysis);
+      console.log('AI Analysis saved to ai-analysis.txt');
     } catch (e) {
       console.log('Analysis failed: ' + e.message);
     }
