@@ -13,7 +13,9 @@
     "test": "node scripts/run-tests.js",
     "allure:generate": "npx allure generate test-results/allure-results -o test-results/allure-report",
     "allure:open": "npx allure open test-results/allure-report",
-    "allure:serve": "npx allure serve test-results/allure-results"
+    "allure:serve": "npx allure serve test-results/allure-results",
+    "heal": "node scripts/smart-healer.js",
+    "heal:dry-run": "node scripts/smart-healer.js --dry-run"
   },
   "repository": {
     "type": "git",
