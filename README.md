@@ -121,45 +121,50 @@ node AI_ANALYZER.js <YOUR_API_KEY> "<build_log_text>"
 
 ---
 
-### 2. Auto-Healer (`auto-healer.js` + `auto-healer.bat`)
+### 2. Smart Auto-Healer (`smart-healer.bat` + `scripts/smart-healer.js`)
 
-**What it does:** Reads a failing Playwright test file, sends it to Claude AI, and automatically fixes broken selectors/locators.
+**What it does:** Automatically classifies test failures, locates broken selectors from the error stack trace, uses an agentic browser loop powered by Claude to find the working selector, applies the fix, and verifies it by re-running the test.
 
-**When to use it:** When a test fails because a button ID, class name, or selector changed in the application.
+**When to use it:** When tests fail due to selector/locator changes or timeouts.
 
 **How it works:**
 
 ```
-Test fails → auto-healer reads the .spec.js file
-           → Sends code to Claude API
-           → Claude returns fixed selectors
-           → Original file backed up (.backup)
-           → Fixed code written to the original file
-           → healing-report.json created
+Test fails → Parse recent test results (Classify)
+           → Locate broken selector in code using stack trace (Locate)
+           → Agentic browser loop with Claude to find working selector (Heal)
+           → Apply fix, backup original file, and re-run test to verify (Verify)
+           → If verification passes, log to healing-report.json; else restore & escalate
 ```
 
 **Usage (Windows batch file):**
 ```bash
-auto-healer.bat <YOUR_API_KEY> tests\LoginScenarios.spec.js
+smart-healer.bat <YOUR_API_KEY> [options]
 ```
 
 **Usage (Node.js directly):**
 ```bash
-node auto-healer.js <YOUR_API_KEY> tests/LoginScenarios.spec.js
+node scripts/smart-healer.js <YOUR_API_KEY> [options]
 ```
+
+**Available Options:**
+- `--dry-run`: Runs the full agentic loop without making any modifications to the files.
+- `--max-heal <number>`: Limit the maximum number of healing attempts (defaults to 3).
 
 **What it produces:**
 
 | Output | Description |
 |:-------|:------------|
-| Fixed test file | The original `.spec.js` file, updated with resilient selectors |
-| `.backup` file | A copy of your original code before any changes |
-| `healing-report.json` | Timestamp, file name, and healing status |
+| Fixed file | The original `.spec.js` or locator file, updated with resilient selectors |
+| `.backup.<timestamp>` file | A copy of your original code before changes were applied |
+| `healing-report.json` | Rolling log of healing status, selector history, and attempts |
+| `healing-escalation.json` | Details of failures that could not be auto-healed and require human intervention |
 
 **AI Healing Rules:**
 - Only broken selectors/locators are changed — test logic stays untouched
 - Prefers resilient selectors: `data-testid`, `role`, `text` over fragile CSS/XPath
 - The original file is **always backed up** before overwriting
+- Verification re-runs the specific test to confirm the fix actually works
 
 > **⚠️ Important:** Both AI tools require an [Anthropic API key](https://console.anthropic.com/). The API key is passed as a command-line argument and is never stored in the codebase.
 
@@ -253,8 +258,8 @@ npx playwright test --headed
 # Analyze a build failure
 node AI_ANALYZER.js <API_KEY> "<paste_build_log_here>"
 
-# Auto-heal a failing test
-auto-healer.bat <API_KEY> tests\LoginScenarios.spec.js
+# Run Smart Auto-Healer to automatically fix failing tests
+smart-healer.bat <API_KEY>
 ```
 
 ---
@@ -320,5 +325,5 @@ The framework includes a **GitHub Actions** workflow (`.github/workflows/playwri
 | Add a new test user | Add a row to `fixtures/registered_users.csv` |
 | Skip a test user | Set `Run` to `no` in the CSV |
 | Debug a failure | Check the HTML report: `npx playwright show-report` |
-| Fix broken selectors with AI | Run `auto-healer.bat <KEY> <file>` |
+| Fix broken selectors with AI | Run `smart-healer.bat <KEY>` |
 | Understand why a build failed | Run `node AI_ANALYZER.js <KEY> "<log>"` |
