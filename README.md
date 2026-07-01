@@ -1,6 +1,7 @@
 # 🎭 Playwright E2E UI Automation Framework
 
 A production-ready **End-to-End (E2E) UI testing framework** built with **Playwright + JavaScript** for the [EventHub](https://eventhub.rahulshettyacademy.com) web application. It includes **AI-powered self-healing and root-cause analysis capabilities**.
+A production-ready **End-to-End (E2E) UI testing framework** built with **Playwright + JavaScript** for the [EventHub](https://eventhub.rahulshettyacademy.com) web application. It includes **AI-powered self-healing and root-cause analysis capabilities**.
 
 ---
 
@@ -24,6 +25,7 @@ This framework follows the **Page Object Model (POM)** with **Separated Locators
 
 ### What is POM and why do we use it?
 
+Imagine your application has a Login page. Instead of writing selectors (`page.click('#loginBtn')`) inside every test, you create a **single class** called `LoginPage` that holds all the actions and selectors in one place.
 Imagine your application has a Login page. Instead of writing selectors (`page.click('#loginBtn')`) inside every test, you create a **single class** called `LoginPage` that holds all the actions and selectors in one place.
 
 **Benefit:** If a button's selector changes tomorrow, you update it in **one place** (the Page Object), not in 50 tests.
@@ -146,6 +148,14 @@ In `registered_users.csv`, each user row has a `Run` column:
 "yes","user_0n0johlg_mqussz08@test.com","STORED_IN_ENV","STORED_IN_ENV"
 ```
 
+```csv
+"Run","Email","Password","final Password"
+"No","user_kqq0vi27_mqgvk2jd@test.com","STORED_IN_ENV","STORED_IN_ENV"
+"yes","user_r35g07yd_mqt1e7xt@test.com","STORED_IN_ENV","STORED_IN_ENV"
+"yes","user_0n0johlg_mqussz08@test.com","STORED_IN_ENV","STORED_IN_ENV"
+```
+
+Set `Run` to `yes` or `no` (case-insensitive) to control which users are included in the test execution — **no code changes needed**.
 Set `Run` to `yes` or `no` (case-insensitive) to control which users are included in the test execution — **no code changes needed**.
 
 ### npm Scripts
@@ -158,6 +168,8 @@ Set `Run` to `yes` or `no` (case-insensitive) to control which users are include
 | `npm run test_bookevent_e2e` | Event booking flow (headed browser) |
 | `npm run test_all_endtoend` | All tests tagged `@endtoend` |
 | `npm test` | Run everything |
+| `npm run heal` | Run Smart Auto-Healer to automatically fix failing tests |
+| `npm run heal:dry-run` | Run Smart Auto-Healer in dry-run mode (no file modifications) |
 | `npm run heal` | Run Smart Auto-Healer to automatically fix failing tests |
 | `npm run heal:dry-run` | Run Smart Auto-Healer in dry-run mode (no file modifications) |
 
@@ -201,7 +213,9 @@ node AI_ANALYZER.js <YOUR_API_KEY> "<build_log_text>"
 ---
 
 ### 2. Smart Auto-Healer (`npm run heal` or `scripts/smart-healer.js`)
+### 2. Smart Auto-Healer (`npm run heal` or `scripts/smart-healer.js`)
 
+**What it does:** Automatically classifies test failures, locates broken selectors from the error stack trace, uses an agentic browser loop powered by Claude to find the working selector, applies fixes, and verifies the fix works.
 **What it does:** Automatically classifies test failures, locates broken selectors from the error stack trace, uses an agentic browser loop powered by Claude to find the working selector, applies fixes, and verifies the fix works.
 
 **When to use it:** When tests fail due to selector/locator changes or timeouts.
@@ -217,6 +231,7 @@ npm run heal
 
 **Usage (using npm script with dry-run):**
 ```bash
+npm run heal:dry-run
 npm run heal:dry-run
 ```
 
@@ -243,6 +258,7 @@ node scripts/smart-healer.js <YOUR_API_KEY> [options]
 - The original file is **always backed up** before overwriting
 - Verification re-runs the specific test to confirm the fix actually works
 
+> **⚠️ Important:** Both AI tools require an [Anthropic API key](https://console.anthropic.com/). The API key is passed as a command-line argument or stored in the `.env` file as `ANTHROPIC_API_KEY`, and is never hardcoded in the codebase.
 > **⚠️ Important:** Both AI tools require an [Anthropic API key](https://console.anthropic.com/). The API key is passed as a command-line argument or stored in the `.env` file as `ANTHROPIC_API_KEY`, and is never hardcoded in the codebase.
 
 ---
@@ -328,8 +344,13 @@ npx playwright install
 ### Environment Setup
 
 Create a `.env` file in the project root to store sensitive data (optional but recommended for API keys):
+Create a `.env` file in the project root to store sensitive data (optional but recommended for API keys):
 
 ```env
+# Optional — for Anthropic API key (only needed for AI features)
+ANTHROPIC_API_KEY=your-api-key-here
+
+# Auto-generated during test runs — stores test user passwords
 # Optional — for Anthropic API key (only needed for AI features)
 ANTHROPIC_API_KEY=your-api-key-here
 
@@ -338,6 +359,7 @@ USER_PASSWORD_1=YourSecurePassword
 USER_PASSWORD_2=AnotherPassword
 ```
 
+> **Note:** The `.env` file should never be committed to version control. It is added to `.gitignore` by default.
 > **Note:** The `.env` file should never be committed to version control. It is added to `.gitignore` by default.
 
 ---
@@ -389,6 +411,10 @@ npx playwright test --headed
 node AI_ANALYZER.js <API_KEY> "<paste_build_log_here>"
 
 # Run Smart Auto-Healer to automatically fix failing tests
+npm run heal
+
+# Or with specific options
+node scripts/smart-healer.js <API_KEY> --dry-run --max-heal 5
 npm run heal
 
 # Or with specific options
@@ -548,6 +574,9 @@ The framework includes a **GitHub Actions** workflow (`.github/workflows/playwri
 | Skip a test user | Set `Run` to `no` in the CSV |
 | Debug a failure | Check the HTML report: `npx playwright show-report` |
 | Fix broken selectors with AI | Run `npm run heal` |
+| Fix broken selectors with AI | Run `npm run heal` |
 | Understand why a build failed | Run `node AI_ANALYZER.js <KEY> "<log>"` |
+| Run tests in UI mode | Run `npx playwright test --ui` |
+| View Allure dashboard | Run `npm run allure:serve` |
 | Run tests in UI mode | Run `npx playwright test --ui` |
 | View Allure dashboard | Run `npm run allure:serve` |
